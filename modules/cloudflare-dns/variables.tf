@@ -24,10 +24,13 @@ variable "ip_records" {
     }))
   }))
   description = "List of IP addresses and DNS records point to it"
+  default     = {}
 }
 
 variable "records" {
-  type = map(list(map(any)))
+  type        = map(list(map(any)))
+  description = "List of general DNS records"
+  default     = {}
 }
 
 variable "enable_acme_dns_challenge" {
