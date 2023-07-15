@@ -2,7 +2,7 @@ output "domain" {
   description = "Map between record key and its domain"
   value = merge(
     { for record_key, record in local.ip_records : record_key => record.domain },
-    { "@" : local.root_domain }
+    { for zone_name, zone in var.ip_records : "${zone.key != null ? zone.key : zone_name}-@" => zone_name }
   )
 }
 

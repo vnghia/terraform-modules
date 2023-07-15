@@ -1,29 +1,33 @@
-variable "zone_id" {
+variable "account_id" {
   type        = string
-  description = "Cloudflare Zone ID"
+  description = "Cloudflare account ID"
 }
 
 variable "ip_records" {
   type = map(object({
-    address = string
+    key = optional(string)
 
-    proxied     = bool
-    enable_ddns = optional(bool, false)
+    ips = map(object({
+      address = string
 
-    records = map(object({
-      key = optional(string)
+      proxied     = bool
+      enable_ddns = optional(bool, false)
 
-      proxied     = optional(bool)
-      enable_ddns = optional(bool)
+      records = map(object({
+        key = optional(string)
 
-      additional_properties = optional(map(any))
+        proxied     = optional(bool)
+        enable_ddns = optional(bool)
+
+        additional_properties = optional(map(any))
+      }))
     }))
   }))
   description = "List of IP addresses and DNS records point to it"
 }
 
 variable "records" {
-  type = list(map(any))
+  type = map(list(map(any)))
 }
 
 variable "enable_acme_dns_challenge" {
